@@ -158,12 +158,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateCartPage() {
         const cartPageTotal = document.getElementById('cartPageTotal');
         const cartSubtotal = document.getElementById('cartSubtotal');
+        const cartSummaryTop = document.getElementById('cartSummaryTop');
+        const cartSubtotalTop = document.getElementById('cartSubtotalTop');
+        const cartPageTotalTop = document.getElementById('cartPageTotalTop');
         
         if (cart.length === 0) {
             // Show empty state
             if (cartEmptyState) cartEmptyState.style.display = 'block';
             if (cartItemsList) cartItemsList.style.display = 'none';
             if (cartSummary) cartSummary.style.display = 'none';
+            if (cartSummaryTop) cartSummaryTop.style.display = 'none';
             if (recommendedProducts) recommendedProducts.style.display = 'block';
         } else {
             // Show cart items
@@ -195,12 +199,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
             if (cartSummary) cartSummary.style.display = 'block';
+            if (cartSummaryTop) cartSummaryTop.style.display = 'block';
             if (recommendedProducts) recommendedProducts.style.display = 'block';
             
             // Calculate totals
             const total = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
             if (cartPageTotal) cartPageTotal.textContent = '$' + total.toFixed(2);
             if (cartSubtotal) cartSubtotal.textContent = '$' + total.toFixed(2);
+            if (cartPageTotalTop) cartPageTotalTop.textContent = '$' + total.toFixed(2);
+            if (cartSubtotalTop) cartSubtotalTop.textContent = '$' + total.toFixed(2);
         }
     }
     
@@ -419,6 +426,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 closeSmsPopup();
             }
+        });
+    }
+
+    // Discount link click handler
+    const discountLink = document.getElementById('discountLink');
+    if (discountLink) {
+        discountLink.addEventListener('click', function() {
+            const smsPopup = document.getElementById('smsPopup');
+            if (smsPopup) {
+                smsPopup.classList.add('active');
+            }
+        });
+    }
+
+    // Checkout button top functionality
+    const checkoutButtonFullTop = document.getElementById('checkoutButtonFullTop');
+    if (checkoutButtonFullTop) {
+        checkoutButtonFullTop.addEventListener('click', function() {
+            alert('Proceeding to checkout...');
         });
     }
 });

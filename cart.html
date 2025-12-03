@@ -86,6 +86,19 @@
                     <!-- Cart items will be dynamically inserted here -->
                 </div>
 
+                <!-- Cart Summary Top -->
+                <div class="cart-summary cart-summary-top" id="cartSummaryTop" style="display: none;">
+                    <div class="cart-summary-row">
+                        <span>Subtotal:</span>
+                        <span id="cartSubtotalTop">$0.00</span>
+                    </div>
+                    <div class="cart-summary-row total">
+                        <span>Total:</span>
+                        <span id="cartPageTotalTop">$0.00</span>
+                    </div>
+                    <button class="checkout-button-full" id="checkoutButtonFullTop">CHECKOUT</button>
+                </div>
+
                 <!-- Recommended Products -->
                 <div class="recommended-products" id="recommendedProducts">
                     <h2>YOU MAY ALSO LIKE</h2>
@@ -227,16 +240,22 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-left">
-                    <h3 class="ummah-link" id="ummahLink">Join Our Ummah</h3>
-                    <div class="ummah-form-container" id="ummahFormContainer">
-                        <form class="ummah-signup" id="ummahSignupForm">
-                            <input type="text" placeholder="Enter email or phone number" required id="ummahInput">
-                            <button type="submit">Join</button>
-                        </form>
+                <div class="footer-top">
+                    <div class="footer-left">
+                        <h3 class="ummah-link" id="ummahLink">Join Our Ummah</h3>
+                        <div class="ummah-form-container" id="ummahFormContainer">
+                            <form class="ummah-signup" id="ummahSignupForm">
+                                <input type="text" placeholder="Enter email or phone number" required id="ummahInput">
+                                <button type="submit">Join</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="footer-right">
+                        <span class="discount-link" id="discountLink">GET 10% OFF</span>
                     </div>
                 </div>
-                <div class="footer-right">
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
                     <p>&copy; 2024 Sakeenah. All rights reserved.</p>
                 </div>
             </div>
