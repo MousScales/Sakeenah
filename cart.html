@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Sakeenah</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Announcement Banner -->
+    <div class="announcement-banner">
+        <p>Free shipping for orders over $100</p>
+    </div>
+    
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <button class="hamburger-menu" id="hamburgerMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <button class="search-icon" id="searchIcon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="logo">
+                <a href="index.html"><h1>Sakeenah</h1></a>
+            </div>
+            <div class="nav-right">
+                <div class="cart-icon" id="cartIcon">
+                    <svg class="bag-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Side Panel Overlay -->
+        <div class="side-panel-overlay" id="sidePanelOverlay"></div>
+        
+        <!-- Side Panel -->
+        <div class="side-panel" id="sidePanel">
+            <div class="side-panel-content">
+                <a href="index.html" class="menu-item">Home</a>
+                <a href="products.html" class="menu-item">Products</a>
+                <a href="about.html" class="menu-item">About</a>
+            </div>
+        </div>
+        
+        <!-- Cart Dropdown -->
+        <div class="cart-dropdown" id="cartDropdown">
+            <h3>Shopping Cart</h3>
+            <div class="cart-items" id="cartItems">
+                <p class="empty-cart">Your cart is empty</p>
+            </div>
+            <div class="cart-total">
+                <strong>Total: $<span id="cartTotal">0.00</span></strong>
+            </div>
+            <button class="checkout-button" id="checkoutButton">Proceed to Checkout</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="cart-page">
+            <div class="cart-container">
+                <h1>CART</h1>
+                
+                <!-- Empty Cart State -->
+                <div class="cart-empty-state" id="cartEmptyState">
+                    <p class="empty-message">YOUR CART IS EMPTY</p>
+                    <div class="cart-actions">
+                        <a href="products.html" class="cart-action-btn">SHOP</a>
+                        <a href="about.html" class="cart-action-btn">SUPPORT</a>
+                    </div>
+                </div>
+
+                <!-- Cart Items -->
+                <div class="cart-items-list" id="cartItemsList">
+                    <!-- Cart items will be dynamically inserted here -->
+                </div>
+
+                <!-- Recommended Products -->
+                <div class="recommended-products" id="recommendedProducts">
+                    <h2>YOU MAY ALSO LIKE</h2>
+                    <div class="cart-product-card">
+                        <div class="cart-product-image">
+                            <div class="placeholder-img">Product 1</div>
+                        </div>
+                        <div class="cart-product-info">
+                            <h3>STRIPE SHIRT</h3>
+                            <p class="cart-product-price">
+                                <span class="sale-price">$29.00</span>
+                                <span class="original-price">$39.00</span>
+                            </p>
+                        </div>
+                        <button class="cart-product-add" data-product="Stripe Shirt" data-price="29.99">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="cart-product-card">
+                        <div class="cart-product-image">
+                            <div class="placeholder-img">Product 2</div>
+                        </div>
+                        <div class="cart-product-info">
+                            <h3>ISLAMIC JEANS</h3>
+                            <p class="cart-product-price">
+                                <span class="sale-price">$59.00</span>
+                            </p>
+                        </div>
+                        <button class="cart-product-add" data-product="Islamic Jeans" data-price="59.99">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary" id="cartSummary" style="display: none;">
+                    <div class="cart-summary-row">
+                        <span>Subtotal:</span>
+                        <span id="cartSubtotal">$0.00</span>
+                    </div>
+                    <div class="cart-summary-row total">
+                        <span>Total:</span>
+                        <span id="cartPageTotal">$0.00</span>
+                    </div>
+                    <button class="checkout-button-full" id="checkoutButtonFull">CHECKOUT</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <h3 class="ummah-link" id="ummahLink">Join Our Ummah</h3>
+                    <div class="ummah-form-container" id="ummahFormContainer">
+                        <form class="ummah-signup" id="ummahSignupForm">
+                            <input type="text" placeholder="Enter email or phone number" required id="ummahInput">
+                            <button type="submit">Join</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="footer-right">
+                    <p>&copy; 2024 Sakeenah. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SMS Popup -->
+    <div class="popup-overlay" id="smsPopup">
+        <div class="popup-content">
+            <button class="popup-close" id="closePopup">&times;</button>
+            <h2>Get 10% Off Your First Order!</h2>
+            <p>Join our SMS list and receive exclusive offers and updates</p>
+            <form class="sms-signup-form" id="smsSignupForm">
+                <input type="tel" placeholder="Enter your phone number" required id="phoneInput" pattern="[0-9]{10,}">
+                <button type="submit">Get 10% Off</button>
+            </form>
+            <p class="popup-disclaimer">By signing up, you agree to receive SMS messages. Message and data rates may apply.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
