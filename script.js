@@ -413,9 +413,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!smsList.includes(phone)) {
                     smsList.push(phone);
                     localStorage.setItem('smsList', JSON.stringify(smsList));
-                    alert('Thank you for subscribing! Your 10% discount code: WELCOME10');
+                    alert('Welcome to the Ummah! Your 10% discount code: WELCOME10');
                 } else {
-                    alert('This number is already subscribed!');
+                    alert('You\'re already part of the Ummah!');
                 }
                 closeSmsPopup();
             }

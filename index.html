@@ -152,9 +152,6 @@
                         </div>
                     </a>
                 </div>
-                <div class="view-all">
-                    <a href="products.html" class="cta-button">View All Products</a>
-                </div>
             </div>
         </section>
     </main>
@@ -180,15 +177,19 @@
 
     <!-- SMS Popup -->
     <div class="popup-overlay" id="smsPopup">
-        <div class="popup-content">
+        <div class="popup-content-new">
             <button class="popup-close" id="closePopup">&times;</button>
-            <h2>Get 10% Off Your First Order!</h2>
-            <p>Join our SMS list and receive exclusive offers and updates</p>
-            <form class="sms-signup-form" id="smsSignupForm">
-                <input type="tel" placeholder="Enter your phone number" required id="phoneInput" pattern="[0-9]{10,}">
-                <button type="submit">Get 10% Off</button>
-            </form>
-            <p class="popup-disclaimer">By signing up, you agree to receive SMS messages. Message and data rates may apply.</p>
+            <div class="popup-left">
+                <div class="popup-product-image">Product Image</div>
+            </div>
+            <div class="popup-right">
+                <h2>Join the Ummah</h2>
+                <p class="popup-offer">Get 10% off your first order</p>
+                <form class="sms-signup-form" id="smsSignupForm">
+                    <input type="tel" placeholder="Phone number" required id="phoneInput" pattern="[0-9]{10,}">
+                    <button type="submit">Join Now</button>
+                </form>
+            </div>
         </div>
     </div>
 
