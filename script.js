@@ -9,7 +9,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Resend API Configuration
-const RESEND_API_KEY = 're_Kr611h3y_M5QfgcDPkhkYTz911kcFpjVQ';
+const RESEND_API_KEY = 're_ReHf6aYB_DhLv99XvUYdqV3zZghgRjvNt';
 
 // Function to send welcome email via Supabase Edge Function
 async function sendWelcomeEmail(email, name = 'Friend') {
