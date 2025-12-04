@@ -1,6 +1,89 @@
 // Cart management
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+// Supabase Configuration
+const SUPABASE_URL = 'https://hdpxxsmwngxiiqekspfn.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhkcHh4c213bmd4aWlxZWtzcGZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MDUwNzAsImV4cCI6MjA4MDM4MTA3MH0.iNbUM3PxteQiU6sGDrGnPRbUBjSaIbXuEJ862CNZPGo';
+
+// Initialize Supabase client
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Resend API Configuration
+const RESEND_API_KEY = 're_Kr611h3y_M5QfgcDPkhkYTz911kcFpjVQ';
+
+// Function to send welcome email via Supabase Edge Function
+async function sendWelcomeEmail(email, name = 'Friend') {
+    try {
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/send-welcome-email`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            },
+            body: JSON.stringify({
+                email: email
+            })
+        });
+
+        if (response.ok) {
+            console.log('Welcome email sent successfully!');
+            return true;
+        } else {
+            console.error('Failed to send email:', await response.text());
+            return false;
+        }
+    } catch (error) {
+        console.error('Error sending email:', error);
+        return false;
+    }
+}
+
+
+// Function to save contact to Supabase
+async function saveContactToSupabase(emailOrPhone, type, source) {
+    try {
+        // Check if contact already exists
+        const { data: existingContacts, error: checkError } = await supabase
+            .from('contacts')
+            .select('*')
+            .eq('email_or_phone', emailOrPhone);
+        
+        if (checkError) {
+            console.error('Error checking for existing contact:', checkError);
+            return { success: false, exists: false, error: checkError };
+        }
+        
+        // If contact already exists, return early
+        if (existingContacts && existingContacts.length > 0) {
+            console.log('Contact already exists in database');
+            return { success: true, exists: true };
+        }
+        
+        // Insert new contact
+        const { data, error } = await supabase
+            .from('contacts')
+            .insert([
+                { 
+                    email_or_phone: emailOrPhone, 
+                    type: type,
+                    source: source 
+                }
+            ]);
+        
+        if (error) {
+            console.error('Error saving to Supabase:', error);
+            return { success: false, exists: false, error: error };
+        }
+        
+        console.log('Contact saved to Supabase successfully!');
+        return { success: true, exists: false, data: data };
+        
+    } catch (error) {
+        console.error('Error in saveContactToSupabase:', error);
+        return { success: false, exists: false, error: error };
+    }
+}
+
 // SMS Popup - Show only on first visit
 function showSmsPopup() {
     const hasVisited = localStorage.getItem('hasVisited');
@@ -363,26 +446,36 @@ document.addEventListener('DOMContentLoaded', function() {
     const ummahSignupForm = document.getElementById('ummahSignupForm');
     
     if (ummahSignupForm) {
-        ummahSignupForm.addEventListener('submit', function(e) {
+        ummahSignupForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const ummahInput = document.getElementById('ummahInput');
-            const input = ummahInput.value;
+            const input = ummahInput.value.trim();
             
             if (input) {
                 // Determine if it's an email or phone number
                 const isEmail = input.includes('@');
-                const listKey = isEmail ? 'emailList' : 'smsList';
-                const listName = isEmail ? 'email' : 'SMS';
+                const type = isEmail ? 'email' : 'phone';
                 
-                // Store in localStorage
-                let contactList = JSON.parse(localStorage.getItem(listKey)) || [];
-                if (!contactList.includes(input)) {
-                    contactList.push(input);
-                    localStorage.setItem(listKey, JSON.stringify(contactList));
-                    alert(`Welcome to our Ummah! You've been added to our ${listName} list.`);
+                // Save to Supabase
+                const result = await saveContactToSupabase(input, type, 'ummah_form');
+                
+                if (result.success) {
+                    if (result.exists) {
+                        alert('You\'re already part of our Ummah!');
+                    } else {
+                        // Send welcome email if it's an email address
+                        if (isEmail) {
+                            await sendWelcomeEmail(input);
+                            alert('Welcome to our Ummah! Check your email for a special discount code.');
+                        } else {
+                            alert('Welcome to our Ummah! You\'ve been added to our SMS list.');
+                        }
+                    }
                 } else {
-                    alert('You\'re already part of our Ummah!');
+                    alert('There was an error saving your information. Please try again.');
+                    console.error('Supabase error:', result.error);
                 }
+                
                 ummahInput.value = '';
                 ummahFormContainer.classList.remove('active');
             }
@@ -409,21 +502,36 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // SMS signup form submission
     if (smsSignupForm) {
-        smsSignupForm.addEventListener('submit', function(e) {
+        smsSignupForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const phoneInput = document.getElementById('phoneInput');
-            const phone = phoneInput.value;
+            const input = phoneInput.value.trim();
             
-            if (phone) {
-                // Store phone in localStorage (you can integrate with SMS service later)
-                let smsList = JSON.parse(localStorage.getItem('smsList')) || [];
-                if (!smsList.includes(phone)) {
-                    smsList.push(phone);
-                    localStorage.setItem('smsList', JSON.stringify(smsList));
-                    alert('Welcome to the Ummah! Your 10% discount code: WELCOME10');
+            if (input) {
+                // Check if it's an email or phone number
+                const isEmail = input.includes('@');
+                const type = isEmail ? 'email' : 'phone';
+                
+                // Save to Supabase
+                const result = await saveContactToSupabase(input, type, 'popup');
+                
+                if (result.success) {
+                    if (result.exists) {
+                        alert('You\'re already part of the Ummah!');
+                    } else {
+                        // Send welcome email if it's an email address
+                        if (isEmail) {
+                            await sendWelcomeEmail(input);
+                            alert('Welcome to the Ummah! Check your email for your 10% discount code: WELCOME10');
+                        } else {
+                            alert('Welcome to the Ummah! Your 10% discount code: WELCOME10');
+                        }
+                    }
                 } else {
-                    alert('You\'re already part of the Ummah!');
+                    alert('There was an error saving your information. Please try again.');
+                    console.error('Supabase error:', result.error);
                 }
+                
                 closeSmsPopup();
             }
         });

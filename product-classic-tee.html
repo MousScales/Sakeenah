@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stripe Shirt - Sakeenah</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <!-- Announcement Banner -->
@@ -215,7 +216,7 @@
                 <h2>Join the Ummah</h2>
                 <p class="popup-offer">Get 10% off your first order</p>
                 <form class="sms-signup-form" id="smsSignupForm">
-                    <input type="tel" placeholder="Phone number" required id="phoneInput" pattern="[0-9]{10,}">
+                    <input type="text" placeholder="Email or phone number" required id="phoneInput">
                     <button type="submit">Join Now</button>
                 </form>
             </div>

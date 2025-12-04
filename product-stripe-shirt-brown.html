@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stripe Shirt - Sakeenah</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <!-- Announcement Banner -->
@@ -179,7 +180,7 @@
             <h2>Get 10% Off Your First Order!</h2>
             <p>Join our SMS list and receive exclusive offers and updates</p>
             <form class="sms-signup-form" id="smsSignupForm">
-                <input type="tel" placeholder="Enter your phone number" required id="phoneInput" pattern="[0-9]{10,}">
+                <input type="text" placeholder="Email or phone number" required id="phoneInput">
                 <button type="submit">Get 10% Off</button>
             </form>
             <p class="popup-disclaimer">By signing up, you agree to receive SMS messages. Message and data rates may apply.</p>
