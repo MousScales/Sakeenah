@@ -1813,8 +1813,8 @@ footer {
     }
 
     .products-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
     }
 
     .featured-products .products-grid {
@@ -1830,7 +1830,15 @@ footer {
         height: 300px;
     }
 
+    .products-section .product-image {
+        height: 300px;
+    }
+
     .featured-products .product-card h3 {
+        font-size: 0.7rem;
+    }
+
+    .products-section .product-card h3 {
         font-size: 0.7rem;
     }
 
@@ -1838,7 +1846,15 @@ footer {
         font-size: 0.75rem;
     }
 
+    .products-section .price {
+        font-size: 0.75rem;
+    }
+
     .featured-products .sale-price {
+        font-size: 0.75rem;
+    }
+
+    .products-section .sale-price {
         font-size: 0.75rem;
     }
 
